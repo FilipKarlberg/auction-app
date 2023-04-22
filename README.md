@@ -19,6 +19,8 @@ Server-side JavaScript runtime environment
 ### Additional Technologies
 - [Socket.IO](https://socket.io/)
 Library for handling real-time communication between users
+- [Postman](https://www.postman.com/)
+Help w/ building and sending requests to api
 
 
 ## Description
