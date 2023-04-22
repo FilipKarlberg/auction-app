@@ -21,6 +21,8 @@ Server-side JavaScript runtime environment
 Library for handling real-time communication between users
 - [Postman](https://www.postman.com/)
 Help w/ building and sending requests to api
+- [Mongoose](https://mongoosejs.com/)
+mongoDB object modeling for NodeJS
 
 
 ## Description
