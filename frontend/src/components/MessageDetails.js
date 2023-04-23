@@ -1,5 +1,8 @@
 import { useMessagesContext } from "../hooks/useMessagesContext";
 
+// date fns
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+
 const MessageDetails = ({ message }) => {
   const { dispatch } = useMessagesContext();
 
@@ -25,8 +28,12 @@ const MessageDetails = ({ message }) => {
         <strong>Body: </strong>
         {message.body}
       </p>
-      <p>{message.createdAt}</p>
-      <span onClick={handleClick}>delete</span>
+      <p>
+        {formatDistanceToNow(new Date(message.createdAt), { addSuffix: true })}
+      </p>
+      <span className="material-symbols-outlined" onClick={handleClick}>
+        delete
+      </span>
     </div>
   );
 };
