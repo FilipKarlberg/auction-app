@@ -7,6 +7,7 @@ const MessageForm = () => {
   const [author, setAuthor] = useState("");
   const [body, setBody] = useState("");
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,12 +25,14 @@ const MessageForm = () => {
 
     if (!response.ok) {
       setError(json.error);
+      setEmptyFields(json.emptyFields);
     }
     if (response.ok) {
       setTitle("");
       setAuthor("");
       setBody("");
       setError(null);
+      setEmptyFields([]);
       console.log("Message added", json);
       dispatch({ type: "CREATE_MESSAGE", payload: json });
     }
@@ -44,6 +47,7 @@ const MessageForm = () => {
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
+        className={emptyFields.includes("title") ? "error" : ""}
       ></input>
 
       <label>Author</label>
@@ -51,6 +55,7 @@ const MessageForm = () => {
         type="text"
         onChange={(e) => setAuthor(e.target.value)}
         value={author}
+        className={emptyFields.includes("author") ? "error" : ""}
       ></input>
 
       <label>Body</label>
@@ -58,6 +63,7 @@ const MessageForm = () => {
         type="text"
         onChange={(e) => setBody(e.target.value)}
         value={body}
+        className={emptyFields.includes("body") ? "error" : ""}
       ></input>
 
       <button>Add message</button>

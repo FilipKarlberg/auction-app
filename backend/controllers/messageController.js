@@ -29,6 +29,23 @@ const getMessage = async (req, res) => {
 const createMessage = async (req, res) => {
   const { author, title, body } = req.body;
 
+  let emptyFields = [];
+
+  if (!author) {
+    emptyFields.push("author");
+  }
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!body) {
+    emptyFields.push("body");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill all the empty fields", emptyFields });
+  }
+
   // add doc to db
   try {
     const message = await Message.create({ author, title, body });
