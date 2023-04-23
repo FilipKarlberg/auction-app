@@ -14,6 +14,11 @@ export const messagesReducer = (state, action) => {
       return {
         messages: [action.payload, ...state.messages],
       };
+    case "DELETE_MESSAGE":
+      return {
+        // keep the messages that are not getting deleted
+        messages: state.messages.filter((m) => m._id !== action.payload._id),
+      };
     default:
       return state;
   }
