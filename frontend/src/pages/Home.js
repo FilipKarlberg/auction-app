@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useMessagesContext } from "../hooks/useMessagesContext";
 
 // components
 import MessageDetails from "../components/MessageDetails";
 import MessageForm from "../components/MessageForm";
 
 const Home = () => {
-  const [messages, setMessages] = useState(null);
+  const { messages, dispatch } = useMessagesContext();
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -13,7 +14,9 @@ const Home = () => {
       const json = await response.json();
 
       if (response.ok) {
-        setMessages(json);
+        // using the dispatch from the useMessagesContext to update the data locally
+        // (global context instead of local state)
+        dispatch({ type: "SET_MESSAGES", payload: json });
       }
     };
 
