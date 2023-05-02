@@ -7,6 +7,7 @@ const express = require("express");
 // mongoose can help prevent errors and ensure data integrity by enforcing validation rules defined in the schema.
 const mongoose = require("mongoose");
 const messageRoutes = require("./routes/messages");
+const userRoutes = require("./routes/user");
 
 // express app
 const app = express();
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/messages", messageRoutes);
+app.use("/api/user", userRoutes);
 
 // connect to database
 mongoose
