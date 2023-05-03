@@ -6,8 +6,13 @@ const {
   deleteMessage,
   updateMessage,
 } = require("../controllers/messageController");
+const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
+
+// use middleware on all routes in this file
+// require authentication for all message routes
+router.use(requireAuth);
 
 // GET all messages
 router.get("/", getMessages);
