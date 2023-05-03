@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useMessagesContext } from "../hooks/useMessagesContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 // components
 import MessageDetails from "../components/MessageDetails";
@@ -7,10 +8,13 @@ import MessageForm from "../components/MessageForm";
 
 const Home = () => {
   const { messages, dispatch } = useMessagesContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const response = await fetch("/api/messages");
+      const response = await fetch("/api/messages", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const json = await response.json();
 
       if (response.ok) {
@@ -20,8 +24,10 @@ const Home = () => {
       }
     };
 
-    fetchMessages();
-  }, [dispatch]);
+    if (user) {
+      fetchMessages();
+    }
+  }, [dispatch, user]);
 
   return (
     <div className="home">

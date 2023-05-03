@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMessagesContext } from "../hooks/useMessagesContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const MessageForm = () => {
   const { dispatch } = useMessagesContext();
@@ -8,9 +9,15 @@ const MessageForm = () => {
   const [body, setBody] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+  const { user } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      setError("You must be logged in");
+      return;
+    }
 
     const message = { title, author, body };
 
@@ -19,6 +26,7 @@ const MessageForm = () => {
       body: JSON.stringify(message),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
     const json = await response.json();
