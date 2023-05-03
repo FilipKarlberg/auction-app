@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 
 // get all messages
 const getMessages = async (req, res) => {
-  const messages = await Message.find({}).sort({ createdAt: -1 });
+  const user_id = req.user._id;
+
+  const messages = await Message.find({ user_id }).sort({ createdAt: -1 });
 
   res.status(200).json(messages);
 };
@@ -48,7 +50,8 @@ const createMessage = async (req, res) => {
 
   // add doc to db
   try {
-    const message = await Message.create({ author, title, body });
+    const user_id = req.user._id;
+    const message = await Message.create({ author, title, body, user_id });
     res.status(200).json(message);
   } catch (error) {
     res.status(400).json({ error: error.message });
