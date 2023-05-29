@@ -68,7 +68,8 @@ header a {
   transition: 150ms;
 }
 .message-details span:hover {
-  background: var(--secondaryBackground);
+  color: white;
+  background: rgb(255, 98, 98);
 }
 
 /* message form */
@@ -132,4 +133,44 @@ form.login {
   padding: 20px;
   background: var(--primaryBackground);
   border-radius: 4px;
+}
+
+/* auctions */
+.auctions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.auction-details {
+  background: var(--primaryBackground);
+  border-radius: 4px;
+  position: relative;
+  padding: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.auction-details h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+.auction-details p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+.auction-details span {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+  transition: 150ms;
+}
+.auction-details span:hover {
+  color: white;
+  background: rgb(255, 98, 98);
 }

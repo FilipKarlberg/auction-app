@@ -1,9 +1,9 @@
-import MessageBoard from "../components/MessageBoard";
+import AuctionFeed from "../components/AuctionFeed";
 
 const Home = () => {
   return (
     <div className="home">
-      <MessageBoard />
+      <AuctionFeed />
     </div>
   );
 };
