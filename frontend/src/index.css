@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap");
+
 :root {
   --primary: #000000;
   --primaryBackground: #ffffff;
@@ -9,6 +11,7 @@
 body {
   background: var(--primaryBackground);
   margin: 0;
+  font-family: "Poppins", sans-serif;
 }
 header {
   background: var(--primaryBackground);
@@ -173,4 +176,10 @@ form.login {
 .auction-details span:hover {
   color: white;
   background: rgb(255, 98, 98);
+}
+
+/* password strength meter */
+.password-strength-meter {
+  position: relative;
+  top: -17px;
 }

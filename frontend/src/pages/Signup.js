@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
 
+// Components
+import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
+
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +29,10 @@ const Signup = () => {
         type="password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
+      />
+      <PasswordStrengthMeter
+        className={"password-strength-meter"}
+        password={password}
       />
 
       <button disabled={isLoading}>Sing up</button>
