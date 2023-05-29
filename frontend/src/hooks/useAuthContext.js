@@ -7,6 +7,7 @@ import { useContext } from "react";
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
 
+  // check so that the AuthContextProvider wraps the app
   if (!context) {
     throw Error("useAuthContext must be used inside an AuthContextProvider");
   }
