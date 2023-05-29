@@ -93,9 +93,15 @@ form button {
   background: var(--primary);
   border: 0;
   color: var(--primaryBackground);
+  border: 1px solid var(--primary);
   padding: 10px;
   border-radius: 4px;
   cursor: pointer;
+  transition: 150ms;
+}
+form button:hover {
+  color: var(--primary);
+  background: var(--primaryBackground);
 }
 div.error {
   padding: 10px;
