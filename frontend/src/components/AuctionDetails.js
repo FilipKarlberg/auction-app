@@ -1,5 +1,6 @@
 import { useAuctionsContext } from "../hooks/useAuctionsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import placeholderImage from "../images/placeholder.jpg";
 
 // date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
@@ -25,8 +26,9 @@ const AuctionDetails = ({ auction }) => {
   };
 
   return (
-    <div className="auction-details">
+    <div className="auction-card">
       <h4>{auction.title}</h4>
+      <img src={placeholderImage} alt="placeholder"></img>
       <p>
         <strong>Body: </strong>
         {auction.body}
