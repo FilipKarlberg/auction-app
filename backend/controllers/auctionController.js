@@ -36,7 +36,7 @@ const getAuction = async (req, res) => {
 
 // create new auction
 const createAuction = async (req, res) => {
-  const { title, body, min_bid, buyout_price } = req.body;
+  const { title, body, ending_date, min_bid, buyout_price } = req.body;
 
   let emptyFields = [];
 
@@ -46,25 +46,38 @@ const createAuction = async (req, res) => {
   if (!body) {
     emptyFields.push("body");
   }
+  if (!ending_date) {
+    emptyFields.push("ending date");
+  }
   if (emptyFields.length > 0) {
+    console.log(emptyFields);
     return res
       .status(400)
-      .json({ error: "Please fill all the empty fields ", emptyFields });
+      .json({ error: "Please fill all the required fields", emptyFields });
+  }
+  if (min_bid < 0 || buyout_price < 0) {
+    return res
+      .status(400)
+      .json({ error: "Minimum bid and buyout price cannot be negative" });
+  }
+
+  if (min_bid >= buyout_price) {
+    return res
+      .status(400)
+      .json({ error: "Minimum bid must be lower than the buyout price" });
   }
 
   // add doc to db
   try {
     const user_id = req.user._id;
 
-    const auctionData = { title, body, user_id };
+    const auctionData = { title, body, user_id, ending_date };
 
-    // check if not required fields exist
-    if (min_bid) {
-      auctionData.min_bid = min_bid;
-    }
-    if (buyout_price) {
-      auctionData.buyout_price = buyout_price;
-    }
+    // check if not required fields exist (default values)
+    // min_bid
+    auctionData.min_bid = min_bid ? min_bid : 0;
+    // buyout_price
+    auctionData.buyout_price = buyout_price ? buyout_price : null;
 
     const auction = await Auction.create(auctionData);
     res.status(200).json(auction);

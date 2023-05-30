@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import CreateAuction from "./pages/CreateAuction";
 
 function App() {
   const { user } = useAuthContext();
@@ -16,6 +17,10 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
+            <Route
+              path="/create"
+              element={user ? <CreateAuction /> : <Navigate to="/login" />}
+            />
             <Route
               path="/"
               element={user ? <Home /> : <Navigate to="/login" />}

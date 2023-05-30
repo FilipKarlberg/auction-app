@@ -48,8 +48,8 @@ const AuctionDetails = ({ auction }) => {
         {formatDistanceToNow(new Date(auction.updatedAt), { addSuffix: true })}
       </p>
       <p>
-        <strong>Ends in: </strong>
-        TODO: add ends in
+        <strong>Ends: </strong>
+        {auction.ending_date}
       </p>
       <span className="material-symbols-outlined" onClick={handleClick}>
         delete

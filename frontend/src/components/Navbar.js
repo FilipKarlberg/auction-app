@@ -13,10 +13,24 @@ const Navbar = () => {
   return (
     <header>
       <div className="container">
-        <Link to="/">
-          <h1>Logo</h1>
-        </Link>
-        <nav>
+        <nav className="nav-left">
+          <Link className="logotype" to="/">
+            <h1>Logo</h1>
+          </Link>
+          {user && (
+            <div>
+              <Link to="/" className="border-hover">
+                Auctions
+              </Link>
+              <Link className="border-hover">My Bids</Link>
+              <Link to="/create" className="border-hover">
+                Create Auction
+              </Link>
+            </div>
+          )}
+        </nav>
+
+        <nav className="nav-right">
           {user && (
             <div>
               <span>{user.email}</span>
@@ -26,8 +40,12 @@ const Navbar = () => {
 
           {!user && (
             <div>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Signup</Link>
+              <Link to="/login" className="border-hover">
+                Login
+              </Link>
+              <Link to="/signup" className="border-hover">
+                Signup
+              </Link>
             </div>
           )}
         </nav>
