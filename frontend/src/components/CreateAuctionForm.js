@@ -70,7 +70,7 @@ const CreateAuctionForm = () => {
   const getMaxDate = () => {
     const today = new Date();
     const maxDate = new Date(today);
-    maxDate.setDate(maxDate.getDate() + 7); // Add 7 days
+    maxDate.setDate(maxDate.getDate() + 31); // Add 7 days
     return maxDate.toISOString().split("T")[0];
   };
 
@@ -96,7 +96,7 @@ const CreateAuctionForm = () => {
         placeholder="Everything there is to know about the item"
       ></textarea>
 
-      <label>Min bid</label>
+      <label>Minimum bid</label>
       <input
         type="number"
         onChange={(e) => setMinBid(e.target.value)}
