@@ -8,11 +8,9 @@ const {
   getAuctionsByUserId,
 } = require("../controllers/auctionController");
 const requireAuth = require("../middleware/requireAuth");
+const uploadMiddleware = require("../middleware/uploadMiddleware");
 
 const router = express.Router();
-
-// require authentication for all Auction routes
-// router.use(requireAuth);
 
 // GET all Auctions
 router.get("/", getAuctions);
@@ -24,7 +22,7 @@ router.get("/:id", getAuction);
 router.get("/:id", getAuctionsByUserId);
 
 // POST a new Auction
-router.post("/", requireAuth, createAuction);
+router.post("/", requireAuth, uploadMiddleware.single("image"), createAuction);
 
 // DELETE a new Auction
 router.delete("/:id", requireAuth, deleteAuction);

@@ -38,6 +38,13 @@ const getAuction = async (req, res) => {
 const createAuction = async (req, res) => {
   const { title, body, ending_date, min_bid, buyout_price } = req.body;
 
+  // handle image file upload
+  const image = req.file;
+  let imagePath;
+  if (image) {
+    imagePath = "/uploads/" + image.filename;
+  }
+
   let emptyFields = [];
 
   if (!title) {
@@ -78,6 +85,8 @@ const createAuction = async (req, res) => {
     auctionData.min_bid = min_bid ? min_bid : 0;
     // buyout_price
     auctionData.buyout_price = buyout_price ? buyout_price : null;
+    // image
+    auctionData.image = image ? imagePath : null;
 
     const auction = await Auction.create(auctionData);
     res.status(200).json(auction);

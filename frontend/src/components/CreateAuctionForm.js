@@ -9,6 +9,7 @@ const CreateAuctionForm = () => {
   const [minBid, setMinBid] = useState("");
   const [buyoutPrice, setBuyoutPrice] = useState("");
   const [endingDate, setEndingDate] = useState("");
+  const [imageFile, setImageFile] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
   const { user } = useAuthContext();
@@ -25,38 +26,42 @@ const CreateAuctionForm = () => {
     let buyout_price = buyoutPrice;
     let ending_date = endingDate;
 
-    const auction = {
-      title,
-      body,
-      min_bid,
-      buyout_price,
-      ending_date,
-    };
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("body", body);
+    formData.append("min_bid", min_bid);
+    formData.append("buyout_price", buyout_price);
+    formData.append("ending_date", ending_date);
+    formData.append("image", imageFile);
 
-    const response = await fetch("/api/auctions", {
-      method: "POST",
-      body: JSON.stringify(auction),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
+    try {
+      const response = await fetch("/api/auctions", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
-    if (!response.ok) {
-      setError(json.error);
-      setEmptyFields(json.emptyFields);
-    }
-    if (response.ok) {
-      setTitle("");
-      setBody("");
-      setMinBid("");
-      setBuyoutPrice("");
-      setEndingDate("");
-      setError(null);
-      setEmptyFields([]);
-      console.log("Auction Created", json);
-      dispatch({ type: "CREATE_AUCTION", payload: json });
+      const json = await response.json();
+
+      if (!response.ok) {
+        setError(json.error);
+        setEmptyFields(json.emptyFields);
+      } else {
+        setTitle("");
+        setBody("");
+        setMinBid("");
+        setBuyoutPrice("");
+        setEndingDate("");
+        setImageFile(null);
+        setError(null);
+        setEmptyFields([]);
+        console.log("Auction Created", json);
+        dispatch({ type: "CREATE_AUCTION", payload: json });
+      }
+    } catch (error) {
+      console.log("Error creating auction:", error);
     }
   };
 
@@ -83,6 +88,7 @@ const CreateAuctionForm = () => {
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
+        name="title"
         className={emptyFields?.includes("title") ? "error" : ""}
         placeholder="Name of item"
       ></input>
@@ -92,6 +98,7 @@ const CreateAuctionForm = () => {
         type="text"
         onChange={(e) => setBody(e.target.value)}
         value={body}
+        name="body"
         className={emptyFields?.includes("body") ? "error" : ""}
         placeholder="Everything there is to know about the item"
       ></textarea>
@@ -101,6 +108,7 @@ const CreateAuctionForm = () => {
         type="number"
         onChange={(e) => setMinBid(e.target.value)}
         value={minBid}
+        name="min_bid"
       ></input>
 
       <label>Buyout price</label>
@@ -108,6 +116,7 @@ const CreateAuctionForm = () => {
         type="number"
         onChange={(e) => setBuyoutPrice(e.target.value)}
         value={buyoutPrice}
+        name="buyout_price"
       ></input>
 
       <label>Auction end</label>
@@ -115,9 +124,17 @@ const CreateAuctionForm = () => {
         type="date"
         onChange={(e) => setEndingDate(e.target.value)}
         value={endingDate}
+        name="ending_date"
         className={emptyFields?.includes("ending_date") ? "error" : ""}
         min={getMinDate()}
         max={getMaxDate()}
+      ></input>
+
+      <label>Image</label>
+      <input
+        type="file"
+        name="image"
+        onChange={(e) => setImageFile(e.target.files[0])}
       ></input>
 
       <button>Create Auction</button>

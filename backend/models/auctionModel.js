@@ -32,6 +32,9 @@ const auctionSchema = new Schema(
     bidder: {
       type: String,
     },
+    image: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
