@@ -1,12 +1,24 @@
 const path = require("path");
+const fs = require("fs");
 
-// get single image
+// Get single image
 const getImage = async (req, res) => {
-  const imageName = req.params.imageName;
-  console.log(imageName);
-  const imagePath = path.join(__dirname, "../public/uploads", imageName);
+  try {
+    const imageName = req.params.imageName;
 
-  res.status(200).sendFile(imagePath);
+    // Image file is located locally
+    const imagePath = path.join(__dirname, "../public/uploads", imageName);
+
+    // Check if the image file exists
+    if (!fs.existsSync(imagePath)) {
+      return res.status(404).json({ error: "Image not found" });
+    }
+
+    res.status(200).sendFile(imagePath);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 module.exports = {
