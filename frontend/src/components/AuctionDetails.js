@@ -28,7 +28,12 @@ const AuctionDetails = ({ auction }) => {
   return (
     <div className="auction-card">
       <h4>{auction.title}</h4>
-      <img src={placeholderImage} alt="placeholder"></img>
+      {auction.image ? (
+        <img src={`/api/images/${auction.image}`} alt={auction.image} />
+      ) : (
+        <img src={placeholderImage} alt="placeholder" />
+      )}
+
       <p>
         <strong>Body: </strong>
         {auction.body}

@@ -8,7 +8,10 @@ const {
   getAuctionsByUserId,
 } = require("../controllers/auctionController");
 const requireAuth = require("../middleware/requireAuth");
-const uploadMiddleware = require("../middleware/uploadMiddleware");
+const {
+  uploadMiddleware,
+  handleMulterErrors,
+} = require("../middleware/uploadMiddleware");
 
 const router = express.Router();
 
@@ -22,7 +25,13 @@ router.get("/:id", getAuction);
 router.get("/:id", getAuctionsByUserId);
 
 // POST a new Auction
-router.post("/", requireAuth, uploadMiddleware.single("image"), createAuction);
+router.post(
+  "/",
+  requireAuth,
+  uploadMiddleware.single("image"),
+  handleMulterErrors, // check if filesize is too big etc
+  createAuction
+);
 
 // DELETE a new Auction
 router.delete("/:id", requireAuth, deleteAuction);

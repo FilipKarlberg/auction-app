@@ -40,9 +40,9 @@ const createAuction = async (req, res) => {
 
   // handle image file upload
   const image = req.file;
-  let imagePath;
+  let imageName;
   if (image) {
-    imagePath = "/uploads/" + image.filename;
+    imageName = image.filename;
   }
 
   let emptyFields = [];
@@ -86,7 +86,7 @@ const createAuction = async (req, res) => {
     // buyout_price
     auctionData.buyout_price = buyout_price ? buyout_price : null;
     // image
-    auctionData.image = image ? imagePath : null;
+    auctionData.image = image ? imageName : null;
 
     const auction = await Auction.create(auctionData);
     res.status(200).json(auction);
