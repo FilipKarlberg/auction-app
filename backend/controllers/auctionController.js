@@ -100,6 +100,8 @@ const createAuction = async (req, res) => {
 const deleteAuction = async (req, res) => {
   const { id } = req.params;
 
+  //const user_id = req.user._id;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such id" });
   }
