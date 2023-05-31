@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-// Custom hook for fetching auction data
-export const useFetchAuction = (auctionId, user) => {
+// Custom hook for fetching single auction data
+export const useFetchAuction = (auctionId) => {
   const [auctionData, setAuctionData] = useState(null);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export const useFetchAuction = (auctionId, user) => {
     };
 
     fetchAuction();
-  }, [auctionId, user]);
+  }, [auctionId]);
 
   return auctionData;
 };
