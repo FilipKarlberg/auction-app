@@ -58,6 +58,7 @@ const AuctionDetails = ({ auction }) => {
         <strong>Ends: </strong>
         {auction.ending_date}
       </p>
+      <button className="border-hover">View Auction</button>
       <span className="material-symbols-outlined" onClick={handleClick}>
         delete
       </span>
