@@ -16,11 +16,14 @@ const AuctionPageDetails = (props) => {
       {auction && auctionStatus === "active" ? (
         <>
           <h4>{auction.title}</h4>
-          {auction.image ? (
-            <img src={`/api/images/${auction.image}`} alt={auction.image} />
-          ) : (
-            <img src={placeholderImage} alt="placeholder" />
-          )}
+          <img
+            src={`/api/images/${auction.image}`}
+            alt={"placeholder"}
+            onError={(e) => {
+              e.target.onerror = null; // Prevent infinite fallback loop
+              e.target.src = placeholderImage;
+            }}
+          />
           <p>
             <strong>Body: </strong>
             {auction.body}
