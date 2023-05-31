@@ -68,7 +68,7 @@ const createAuction = async (req, res) => {
       .json({ error: "Minimum bid and buyout price cannot be negative" });
   }
 
-  if (min_bid >= buyout_price) {
+  if (min_bid > buyout_price) {
     return res
       .status(400)
       .json({ error: "Minimum bid must be lower than the buyout price" });
@@ -99,8 +99,14 @@ const createAuction = async (req, res) => {
 // delete from db
 const deleteAuction = async (req, res) => {
   const { id } = req.params;
+  const { user_id } = req.body;
 
-  //const user_id = req.user._id;
+  if (req.user._id.toString() !== user_id) {
+    return res.status(400).json({
+      error:
+        "To delete an Auction, the account id must match user_id of auction",
+    });
+  }
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such id" });
@@ -112,7 +118,7 @@ const deleteAuction = async (req, res) => {
     return res.status(400).json({ error: "No auction found with id: ", id });
   }
 
-  res.status(200).json(auction);
+  res.status(200).json({ message: "Auction successfully deleted", auction });
 };
 
 // update an auction

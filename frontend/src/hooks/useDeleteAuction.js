@@ -13,7 +13,13 @@ const useDeleteAuction = (auction) => {
     try {
       const response = await fetch("/api/auctions/" + auction._id, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${user.token}` },
+        body: JSON.stringify({
+          user_id: auction.user_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
       });
 
       if (response.ok) {
