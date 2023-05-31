@@ -1,5 +1,3 @@
-import { useAuctionsContext } from "../hooks/useAuctionsContext";
-import { useAuthContext } from "../hooks/useAuthContext";
 import { Link } from "react-router-dom";
 import placeholderImage from "../images/placeholder.jpg";
 
@@ -7,25 +5,6 @@ import placeholderImage from "../images/placeholder.jpg";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 const AuctionCard = ({ auction }) => {
-  const { dispatch } = useAuctionsContext();
-  const { user } = useAuthContext();
-
-  const handleClick = async () => {
-    if (!user) {
-      return;
-    }
-
-    const response = await fetch("/api/auctions/" + auction._id, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: "DELETE_AUCTION", payload: json });
-    }
-  };
-
   return (
     <div className="auction-card">
       <h4>{auction.title}</h4>
@@ -34,7 +13,6 @@ const AuctionCard = ({ auction }) => {
       ) : (
         <img src={placeholderImage} alt="placeholder" />
       )}
-
       <p>
         <strong>Body: </strong>
         {auction.body}
@@ -62,9 +40,6 @@ const AuctionCard = ({ auction }) => {
       <Link to={`/auctions/${auction._id}`}>
         <button className="border-hover">View Auction</button>
       </Link>
-      <span className="material-symbols-outlined" onClick={handleClick}>
-        delete
-      </span>
     </div>
   );
 };

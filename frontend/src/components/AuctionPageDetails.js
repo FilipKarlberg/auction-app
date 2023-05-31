@@ -2,10 +2,14 @@ import placeholderImage from "../images/placeholder.jpg";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useFetchAuction } from "../hooks/useFetchAuction";
 import useDeleteAuction from "../hooks/useDeleteAuction";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const AuctionPageDetails = (props) => {
   const auction = useFetchAuction(props.auctionId);
   const { auctionStatus, deleteAuction } = useDeleteAuction(auction);
+  const { user } = useAuthContext();
+
+  const isCreator = auction && user && auction.user_id === user._id;
 
   return (
     <div className="auction-card">
@@ -43,9 +47,11 @@ const AuctionPageDetails = (props) => {
             <strong>Ends: </strong>
             {auction.ending_date}
           </p>
-          <span className="material-symbols-outlined" onClick={deleteAuction}>
-            delete
-          </span>
+          {isCreator && (
+            <span className="material-symbols-outlined" onClick={deleteAuction}>
+              delete
+            </span>
+          )}
         </>
       ) : auctionStatus === "deleted" ? (
         <p>Auction deleted.</p>
