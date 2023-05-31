@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import CreateAuction from "./pages/CreateAuction";
+import AuctionPage from "./pages/AuctionPage";
 
 function App() {
   const { user } = useAuthContext();
@@ -33,6 +34,7 @@ function App() {
               path="/signup"
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
+            <Route path="/auctions/:id" element={<AuctionPage />} />
           </Routes>
         </div>
       </BrowserRouter>

@@ -1,11 +1,12 @@
 import { useAuctionsContext } from "../hooks/useAuctionsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { Link } from "react-router-dom";
 import placeholderImage from "../images/placeholder.jpg";
 
 // date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
-const AuctionDetails = ({ auction }) => {
+const AuctionCard = ({ auction }) => {
   const { dispatch } = useAuctionsContext();
   const { user } = useAuthContext();
 
@@ -58,7 +59,9 @@ const AuctionDetails = ({ auction }) => {
         <strong>Ends: </strong>
         {auction.ending_date}
       </p>
-      <button className="border-hover">View Auction</button>
+      <Link to={`/auctions/${auction._id}`}>
+        <button className="border-hover">View Auction</button>
+      </Link>
       <span className="material-symbols-outlined" onClick={handleClick}>
         delete
       </span>
@@ -66,4 +69,4 @@ const AuctionDetails = ({ auction }) => {
   );
 };
 
-export default AuctionDetails;
+export default AuctionCard;

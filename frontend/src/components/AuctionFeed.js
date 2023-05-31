@@ -3,7 +3,7 @@ import { useAuctionsContext } from "../hooks/useAuctionsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 // Components
-import AuctionDetails from "./AuctionDetails";
+import AuctionCard from "../components/AuctionCard";
 
 const AuctionFeed = () => {
   const { auctions, dispatch } = useAuctionsContext();
@@ -33,7 +33,7 @@ const AuctionFeed = () => {
       <div className="auctions">
         {auctions &&
           auctions.map((auction) => (
-            <AuctionDetails key={auction._id} auction={auction} />
+            <AuctionCard key={auction._id} auction={auction} />
           ))}
       </div>
     </div>
