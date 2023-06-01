@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { useAuctionsContext } from "../hooks/useAuctionsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const CreateAuctionForm = () => {
-  const { dispatch } = useAuctionsContext();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [minBid, setMinBid] = useState("");
@@ -58,7 +56,6 @@ const CreateAuctionForm = () => {
         setError(null);
         setEmptyFields([]);
         console.log("Auction Created", json);
-        dispatch({ type: "CREATE_AUCTION", payload: json });
       }
     } catch (error) {
       console.log("Error creating auction:", error);

@@ -34,7 +34,7 @@ function App() {
               path="/signup"
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
-            <Route path="/auctions/:id" element={<AuctionPage />} />
+            <Route path="/auctions/:auctionId" element={<AuctionPage />} />
           </Routes>
         </div>
       </BrowserRouter>

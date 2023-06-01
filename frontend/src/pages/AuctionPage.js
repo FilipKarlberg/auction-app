@@ -1,16 +1,105 @@
 import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import placeholderImage from "../images/placeholder.jpg";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import axios from "axios";
 
-// Components
-import AuctionPageDetails from "../components/AuctionPageDetails";
+// hooks
+import useDeleteAuction from "../hooks/useDeleteAuction";
+import { useAuthContext } from "../hooks/useAuthContext";
 
-const AuctionPage = () => {
-  const { id } = useParams();
+// components
+import BidForm from "../components/BidForm";
+
+const AuctionPageDetails = () => {
+  const [isCreator, setIsCreator] = useState(false);
+  const { auctionId } = useParams();
+  const { user } = useAuthContext();
+
+  const onSuccess = (auction) => {
+    if (user._id === auction.user_id) {
+      // if logged in user matches creator of auction
+      setIsCreator(true);
+    }
+  };
+
+  const fetchAuction = (auctionId) => {
+    return axios.get(`/api/auctions/${auctionId}`);
+  };
+
+  const { isLoading, data, isError, error } = useQuery(
+    ["auction", auctionId],
+    () => fetchAuction(auctionId),
+    {
+      onSuccess: (data) => onSuccess(data.data.auction),
+      onError: (error) => console.log(error.message),
+    }
+  );
+
+  const { deleteAuction } = useDeleteAuction(data?.data.auction);
+
+  const auction = data?.data.auction;
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (isError) {
+    return <h2>{error.message}</h2>;
+  }
 
   return (
-    <div className="auction-page">
-      {!id ? <h1>Auction not found</h1> : <AuctionPageDetails auctionId={id} />}
-    </div>
+    <>
+      <div className="auction-card">
+        {isCreator && (
+          <span
+            className="material-symbols-outlined"
+            onClick={() => {
+              deleteAuction();
+            }}
+          >
+            delete
+          </span>
+        )}
+        <h4>{auction.title}</h4>
+        <img
+          src={`/api/images/${auction.image}`}
+          alt={"placeholder"}
+          onError={(e) => {
+            e.target.onerror = null; // Prevent infinite fallback loop
+            e.target.src = placeholderImage;
+          }}
+        />
+        <p>
+          <strong>Body: </strong>
+          {auction.body}
+        </p>
+        <p>
+          <strong>Minimum bid: </strong>
+          {auction.min_bid}
+        </p>
+        <p>
+          <strong>Current bid: </strong>
+          {auction.current_bid}
+        </p>
+        <p>
+          <strong>Buyout: </strong>
+          {auction.buyout_price}
+        </p>
+        <p>
+          <strong>Last active: </strong>
+          {formatDistanceToNow(new Date(auction.updatedAt), {
+            addSuffix: true,
+          })}
+        </p>
+        <p>
+          <strong>Ends: </strong>
+          {auction.ending_date}
+        </p>
+      </div>
+    </>
   );
 };
 
-export default AuctionPage;
+export default AuctionPageDetails;

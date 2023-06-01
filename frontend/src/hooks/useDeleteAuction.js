@@ -1,9 +1,7 @@
 import { useAuthContext } from "../hooks/useAuthContext";
-import { useState } from "react";
 
 const useDeleteAuction = (auction) => {
   const { user } = useAuthContext();
-  const [auctionStatus, setAuctionStatus] = useState("active");
 
   const deleteAuction = async () => {
     if (!user) {
@@ -23,7 +21,7 @@ const useDeleteAuction = (auction) => {
       });
 
       if (response.ok) {
-        setAuctionStatus("deleted");
+        console.log("Removed Auction: ", auction._id);
       } else {
         throw new Error("Failed to delete auction");
       }
@@ -32,7 +30,7 @@ const useDeleteAuction = (auction) => {
     }
   };
 
-  return { auctionStatus, deleteAuction };
+  return { deleteAuction };
 };
 
 export default useDeleteAuction;
