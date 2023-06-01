@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { toast } from "react-toastify";
 
 const CreateAuctionForm = () => {
   const [title, setTitle] = useState("");
@@ -55,7 +56,16 @@ const CreateAuctionForm = () => {
         setImageFile(null);
         setError(null);
         setEmptyFields([]);
-        console.log("Auction Created", json);
+        toast.success("Auction created! 💸", {
+          position: "top-center",
+          autoClose: 10000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     } catch (error) {
       console.log("Error creating auction:", error);

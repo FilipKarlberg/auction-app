@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "react-query";
+
 import placeholderImage from "../images/placeholder.jpg";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import axios from "axios";

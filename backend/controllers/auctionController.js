@@ -68,7 +68,8 @@ const createAuction = async (req, res) => {
       .json({ error: "Minimum bid and buyout price cannot be negative" });
   }
 
-  if (min_bid > buyout_price) {
+  //console.log(min_bid, " ", buyout_price);
+  if (buyout_price > min_bid) {
     return res
       .status(400)
       .json({ error: "Minimum bid must be lower than the buyout price" });

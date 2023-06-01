@@ -1,5 +1,6 @@
 import { useAuthContext } from "./useAuthContext";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
@@ -23,6 +24,17 @@ export const useSignup = () => {
       setError(json.error);
     }
     if (response.ok) {
+      toast.info("Welcome! 👋", {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+
       // save user to local storage
       localStorage.setItem("user", JSON.stringify(json));
 

@@ -1,4 +1,5 @@
 import { useAuthContext } from "../hooks/useAuthContext";
+import { toast } from "react-toastify";
 
 const useDeleteAuction = (auction) => {
   const { user } = useAuthContext();
@@ -21,8 +22,28 @@ const useDeleteAuction = (auction) => {
       });
 
       if (response.ok) {
+        toast.info("Auction deleted! 👋", {
+          position: "top-center",
+          autoClose: 10000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         console.log("Removed Auction: ", auction._id);
       } else {
+        toast.error("Failed to delete auction.", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         throw new Error("Failed to delete auction");
       }
     } catch (error) {

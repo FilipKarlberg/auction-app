@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const BidForm = ({ auction }) => {
   const [bid, setBid] = useState("");
@@ -27,8 +28,43 @@ const BidForm = ({ auction }) => {
 
   const createPostMutation = useMutation({
     mutationFn: sendBid,
+    onMutate: () => {
+      toast.info("Placing bid, please wait! 🫠", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(["auction", auction._id]);
+      toast.success("Bid placed successfully! 🥳", {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    },
+    onError: () => {
+      queryClient.invalidateQueries(["auction", auction._id]);
+      toast.error("Failed to place bid.. 🫠", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     },
   });
 
