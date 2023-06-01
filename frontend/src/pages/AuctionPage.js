@@ -14,6 +14,7 @@ import BidForm from "../components/BidForm";
 
 const AuctionPage = () => {
   const [isCreator, setIsCreator] = useState(false);
+
   const { auctionId } = useParams();
   const { user } = useAuthContext();
 
@@ -37,16 +38,20 @@ const AuctionPage = () => {
     }
   );
 
-  const { deleteAuction } = useDeleteAuction(data?.data.auction);
-
   const auction = data?.data.auction;
+  const { deleteAuction } = useDeleteAuction(auction);
 
   if (isLoading) {
     return <h2>Loading...</h2>;
   }
 
   if (isError) {
-    return <h2>{error.message}</h2>;
+    return (
+      <>
+        <h2>{error.message}</h2>
+        <p>Could not find auction with id {auctionId}</p>
+      </>
+    );
   }
 
   return (
