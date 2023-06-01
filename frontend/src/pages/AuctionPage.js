@@ -15,7 +15,6 @@ import BidForm from "../components/BidForm";
 
 const AuctionPage = () => {
   const [isCreator, setIsCreator] = useState(false);
-
   const { auctionId } = useParams();
   const { user } = useAuthContext();
 
@@ -81,17 +80,27 @@ const AuctionPage = () => {
           <strong>Body: </strong>
           {auction.body}
         </p>
-        <p>
-          <strong>Minimum bid: </strong>
-          {auction.min_bid}
-        </p>
-        <p>
-          <strong>Current bid: </strong>
-          {auction.current_bid}
-        </p>
+
+        {!auction.current_bid ? (
+          <p>
+            <strong>Minimum bid: </strong>
+            {auction.min_bid} €
+          </p>
+        ) : auction.is_sold ? (
+          <p>
+            <strong>Sold for: </strong>
+            {auction.current_bid} €
+          </p>
+        ) : (
+          <p>
+            <strong>Current bid: </strong>
+            {auction.current_bid} €
+          </p>
+        )}
+
         <p>
           <strong>Buyout: </strong>
-          {auction.buyout_price}
+          {auction.buyout_price} €
         </p>
         <p>
           <strong>Last active: </strong>
@@ -104,7 +113,7 @@ const AuctionPage = () => {
           {auction.ending_date}
         </p>
       </div>
-      <BidForm auction={auction} />
+      {!auction.is_sold && <BidForm auction={auction} />}
     </>
   );
 };

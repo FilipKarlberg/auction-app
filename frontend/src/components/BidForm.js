@@ -28,18 +28,6 @@ const BidForm = ({ auction }) => {
 
   const createPostMutation = useMutation({
     mutationFn: sendBid,
-    onMutate: () => {
-      toast.info("Placing bid, please wait! 🫠", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "colored",
-      });
-    },
     onSuccess: () => {
       queryClient.invalidateQueries(["auction", auction._id]);
       toast.success("Bid placed successfully! 🥳", {
@@ -52,6 +40,7 @@ const BidForm = ({ auction }) => {
         progress: undefined,
         theme: "colored",
       });
+      setBid("");
     },
     onError: () => {
       queryClient.invalidateQueries(["auction", auction._id]);
@@ -81,7 +70,7 @@ const BidForm = ({ auction }) => {
           type="number"
           onChange={(e) => setBid(e.target.value)}
           value={bid}
-          placeholder={`Enter your bid here`}
+          placeholder={`Enter your bid here (€)`}
           min={auction.min_bid}
           max={auction.buyout_price}
           name="min_bid"

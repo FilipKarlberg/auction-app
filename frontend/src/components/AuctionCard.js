@@ -20,17 +20,27 @@ const AuctionCard = ({ auction }) => {
         <strong>Body: </strong>
         {auction.body}
       </p>
-      <p>
-        <strong>Minimum bid: </strong>
-        {auction.min_bid}
-      </p>
-      <p>
-        <strong>Current bid: </strong>
-        {auction.current_bid}
-      </p>
+
+      {!auction.current_bid ? (
+        <p>
+          <strong>Minimum bid: </strong>
+          {auction.min_bid} €
+        </p>
+      ) : auction.is_sold ? (
+        <p>
+          <strong>Sold for: </strong>
+          {auction.current_bid} €
+        </p>
+      ) : (
+        <p>
+          <strong>Current bid: </strong>
+          {auction.current_bid} €
+        </p>
+      )}
+
       <p>
         <strong>Buyout: </strong>
-        {auction.buyout_price}
+        {auction.buyout_price} €
       </p>
       <p>
         <strong>Last active: </strong>

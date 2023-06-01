@@ -35,6 +35,10 @@ const auctionSchema = new Schema(
     image: {
       type: String,
     },
+    is_sold: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

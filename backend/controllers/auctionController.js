@@ -69,10 +69,11 @@ const createAuction = async (req, res) => {
   }
 
   //console.log(min_bid, " ", buyout_price);
-  if (buyout_price > min_bid) {
-    return res
-      .status(400)
-      .json({ error: "Minimum bid must be lower than the buyout price" });
+  if (parseInt(buyout_price) < parseInt(min_bid)) {
+    return res.status(400).json({
+      error: `Minimum bid must be lower than the buyout price, 
+        min: ${min_bid}, buyout: ${buyout_price}`,
+    });
   }
 
   // add doc to db
@@ -130,11 +131,28 @@ const updateAuction = async (req, res) => {
     return res.status(404).json({ error: "No such id" });
   }
 
+  // set is_sold to true if we hit buyout, keep is sold if it had it originally
+  let is_sold = false;
+  const oldAuction = await Auction.findById(id);
+  console.log("body value: ", req.body.current_bid);
+  console.log("buyout: ", oldAuction.buyout_price);
+
+  if (parseInt(req.body.current_bid) === oldAuction.buyout_price) {
+    console.log("SÅÅÅÅÅÅLD");
+    console.log("body value: ", req.body.bid);
+    console.log("buyout: ", oldAuction.buyout_price);
+
+    is_sold = true;
+  } else if (req.body.is_sold === true) {
+    is_sold = true; // retain the true value of is_sold from req.body
+  }
+
   // first param to find auction in form, second is updated version of that auction
   const auction = await Auction.findByIdAndUpdate(
     { _id: id },
     {
       ...req.body,
+      is_sold: is_sold,
     }
   );
 
