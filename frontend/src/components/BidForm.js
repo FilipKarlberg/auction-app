@@ -1,36 +1,40 @@
 import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useMutation, useQueryClient } from "react-query";
+import axios from "axios";
 
 const BidForm = ({ auction }) => {
   const [bid, setBid] = useState("");
-  const [error, setError] = useState(null);
   const { user } = useAuthContext();
+  const queryClient = useQueryClient();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!user) {
-      setError("You must be logged in");
-      return;
-    }
-
-    const response = await fetch(`/api/auctions/${auction._id}`, {
-      method: "PATCH",
-      body: JSON.stringify({ current_bid: bid, bidder: user._id }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+  const sendBid = () => {
+    return axios.patch(
+      `/api/auctions/${auction._id}`,
+      {
+        current_bid: bid,
+        min_bid: parseInt(bid) + 1,
+        bidder: user._id,
       },
-    });
-    const json = await response.json();
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+  };
 
-    if (!response.ok) {
-      setError(json.error);
-    }
-    if (response.ok) {
-      setError(null);
-      console.log("Bid placed", json);
-    }
+  const createPostMutation = useMutation({
+    mutationFn: sendBid,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["auction", auction._id]);
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createPostMutation.mutate();
   };
 
   return (
@@ -47,7 +51,6 @@ const BidForm = ({ auction }) => {
           name="min_bid"
         ></input>
       </form>
-      {error && <div className="error">{error}</div>}
     </>
   );
 };

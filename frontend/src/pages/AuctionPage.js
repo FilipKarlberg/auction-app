@@ -12,7 +12,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 // components
 import BidForm from "../components/BidForm";
 
-const AuctionPageDetails = () => {
+const AuctionPage = () => {
   const [isCreator, setIsCreator] = useState(false);
   const { auctionId } = useParams();
   const { user } = useAuthContext();
@@ -98,8 +98,9 @@ const AuctionPageDetails = () => {
           {auction.ending_date}
         </p>
       </div>
+      <BidForm auction={auction} />
     </>
   );
 };
 
-export default AuctionPageDetails;
+export default AuctionPage;
