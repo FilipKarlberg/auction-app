@@ -32,7 +32,7 @@ const MessageForm = ({ auction }) => {
       queryClient.invalidateQueries(["message-feed", auction._id]);
       toast.success("Message sent successfully! 🥳", {
         position: "top-center",
-        autoClose: 10000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
