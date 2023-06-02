@@ -10,7 +10,7 @@ const MessageForm = ({ auction }) => {
   const { user } = useAuthContext();
   const queryClient = useQueryClient();
 
-  const sendBid = () => {
+  const sendMessage = () => {
     return axios.post(
       `/api/messages/`,
       {
@@ -27,9 +27,9 @@ const MessageForm = ({ auction }) => {
   };
 
   const createPostMutation = useMutation({
-    mutationFn: sendBid,
+    mutationFn: sendMessage,
     onSuccess: () => {
-      queryClient.invalidateQueries(["auction", auction._id]);
+      queryClient.invalidateQueries(["message-feed", auction._id]);
       toast.success("Message sent successfully! 🥳", {
         position: "top-center",
         autoClose: 10000,
@@ -43,7 +43,7 @@ const MessageForm = ({ auction }) => {
       setMessage("");
     },
     onError: () => {
-      queryClient.invalidateQueries(["auction", auction._id]);
+      queryClient.invalidateQueries(["message-feed", auction._id]);
       toast.error("Failed to send message.. 🫠", {
         position: "top-center",
         autoClose: 3000,
@@ -69,6 +69,7 @@ const MessageForm = ({ auction }) => {
         type="text"
         onChange={(e) => setMessage(e.target.value)}
         value={message}
+        required
       ></input>
 
       <button>Send</button>
