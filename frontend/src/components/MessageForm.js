@@ -1,81 +1,77 @@
 import { useState } from "react";
-import { useMessagesContext } from "../hooks/useMessagesContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useQueryClient } from "react-query";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const MessageForm = () => {
-  const { dispatch } = useMessagesContext();
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [body, setBody] = useState("");
-  const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
+const MessageForm = ({ auction }) => {
+  const [message, setMessage] = useState("");
   const { user } = useAuthContext();
+  const queryClient = useQueryClient();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!user) {
-      setError("You must be logged in");
-      return;
-    }
-
-    const message = { title, author, body };
-
-    const response = await fetch("/api/messages", {
-      method: "POST",
-      body: JSON.stringify(message),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+  const sendBid = () => {
+    return axios.post(
+      `/api/messages/`,
+      {
+        message: message,
+        auction_id: auction._id,
       },
-    });
-    const json = await response.json();
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+  };
 
-    if (!response.ok) {
-      setError(json.error);
-      setEmptyFields(json.emptyFields);
-    }
-    if (response.ok) {
-      setTitle("");
-      setAuthor("");
-      setBody("");
-      setError(null);
-      setEmptyFields([]);
-      console.log("Message added", json);
-      dispatch({ type: "CREATE_MESSAGE", payload: json });
-    }
+  const createPostMutation = useMutation({
+    mutationFn: sendBid,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["auction", auction._id]);
+      toast.success("Message sent successfully! 🥳", {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+      setMessage("");
+    },
+    onError: () => {
+      queryClient.invalidateQueries(["auction", auction._id]);
+      toast.error("Failed to send message.. 🫠", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createPostMutation.mutate();
   };
 
   return (
     <form className="create" onSubmit={handleSubmit}>
-      <h3>Add a new message</h3>
-
-      <label>Title</label>
+      <label>Send message</label>
       <input
         type="text"
-        onChange={(e) => setTitle(e.target.value)}
-        value={title}
-        className={emptyFields.includes("title") ? "error" : ""}
+        onChange={(e) => setMessage(e.target.value)}
+        value={message}
       ></input>
 
-      <label>Author</label>
-      <input
-        type="text"
-        onChange={(e) => setAuthor(e.target.value)}
-        value={author}
-        className={emptyFields.includes("author") ? "error" : ""}
-      ></input>
-
-      <label>Body</label>
-      <input
-        type="text"
-        onChange={(e) => setBody(e.target.value)}
-        value={body}
-        className={emptyFields.includes("body") ? "error" : ""}
-      ></input>
-
-      <button>Add message</button>
-      {error && <div className="error">{error}</div>}
+      <button>Send</button>
     </form>
   );
 };

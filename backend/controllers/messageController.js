@@ -1,5 +1,6 @@
 const Message = require("../models/messageModel");
 const mongoose = require("mongoose");
+const User = require("../models/userModel");
 
 // get all messages
 const getMessages = async (req, res) => {
@@ -29,30 +30,34 @@ const getMessage = async (req, res) => {
 
 // create new message
 const createMessage = async (req, res) => {
-  const { author, title, body } = req.body;
+  const { message, auction_id } = req.body;
+  const user_id = req.user._id;
 
-  let emptyFields = [];
+  if (!message) {
+    return res.status(400).json({ error: "Empty message: ", message });
+  }
 
-  if (!author) {
-    emptyFields.push("author");
+  if (!auction_id) {
+    return res.status(400).json({ error: "Empty auction_id", auction_id });
   }
-  if (!title) {
-    emptyFields.push("title");
+
+  const user = await User.findById(user_id);
+
+  if (!user) {
+    return res.status(400).json({ error: "User not found, ", user_id });
   }
-  if (!body) {
-    emptyFields.push("body");
-  }
-  if (emptyFields.length > 0) {
-    return res
-      .status(400)
-      .json({ error: "Please fill all the empty fields", emptyFields });
-  }
+
+  const username = user.username;
 
   // add doc to db
   try {
-    const user_id = req.user._id;
-    const message = await Message.create({ author, title, body, user_id });
-    res.status(200).json(message);
+    const createdMessage = await Message.create({
+      message,
+      user_id,
+      auction_id,
+      username,
+    });
+    res.status(200).json(createdMessage);
   } catch (error) {
     res.status(400).json({ error: error.message });
     console.log(error);
@@ -99,10 +104,31 @@ const updateMessage = async (req, res) => {
   res.status(200).json(message);
 };
 
+const getMessagesByAuctionId = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "Invalid id" });
+  }
+
+  const messages = await Message.find({ auction_id: id }).sort({
+    createdAt: 1,
+  });
+
+  if (!messages) {
+    return res
+      .status(400)
+      .json({ error: "No messages found with auction_id: ", id });
+  }
+
+  res.status(200).json(messages);
+};
+
 module.exports = {
   getMessages,
   getMessage,
   createMessage,
   deleteMessage,
   updateMessage,
+  getMessagesByAuctionId,
 };

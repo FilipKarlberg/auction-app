@@ -12,6 +12,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 // components
 import BidForm from "../components/BidForm";
+import MessageForm from "../components/MessageForm";
 
 const AuctionPage = () => {
   const [isCreator, setIsCreator] = useState(false);
@@ -130,6 +131,7 @@ const AuctionPage = () => {
 
         {!auction.is_sold && <BidForm auction={auction} />}
       </div>
+      <MessageForm auction={auction} />
     </>
   );
 };
