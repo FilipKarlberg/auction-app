@@ -65,7 +65,7 @@ const BidForm = ({ auction }) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label>Make bid</label>
+        <label>Place bid</label>
         <input
           type="number"
           onChange={(e) => setBid(e.target.value)}

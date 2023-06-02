@@ -87,10 +87,16 @@ const AuctionPage = () => {
             {auction.min_bid} €
           </p>
         ) : auction.is_sold ? (
-          <p>
-            <strong>Sold for: </strong>
-            {auction.current_bid} €
-          </p>
+          <>
+            <p>
+              <strong>Sold for: </strong>
+              {auction.current_bid} €
+            </p>
+            <p>
+              <strong>Buyer: </strong>
+              {auction.bidder_username}
+            </p>
+          </>
         ) : (
           <>
             <p>
@@ -101,13 +107,13 @@ const AuctionPage = () => {
               <strong>Bidder: </strong>
               {auction.bidder_username ? auction.bidder_username : "-"}
             </p>
+            <p>
+              <strong>Buyout: </strong>
+              {auction.buyout_price ? auction.buyout_price + " €" : "-"}
+            </p>
           </>
         )}
 
-        <p>
-          <strong>Buyout: </strong>
-          {auction.buyout_price ? auction.buyout_price + " €" : "-"}
-        </p>
         <p>
           <strong>Last active: </strong>
           {formatDistanceToNow(new Date(auction.updatedAt), {
