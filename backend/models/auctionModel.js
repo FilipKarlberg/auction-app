@@ -22,6 +22,7 @@ const auctionSchema = new Schema(
     },
     min_bid: {
       type: Number,
+      default: 1,
     },
     buyout_price: {
       type: Number,
@@ -30,6 +31,9 @@ const auctionSchema = new Schema(
       type: Number,
     },
     bidder: {
+      type: String,
+    },
+    bidder_username: {
       type: String,
     },
     image: {

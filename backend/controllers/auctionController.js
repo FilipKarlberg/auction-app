@@ -1,4 +1,5 @@
 const Auction = require("../models/auctionModel");
+const User = require("../models/userModel");
 const mongoose = require("mongoose");
 
 // get all auctions
@@ -134,18 +135,14 @@ const updateAuction = async (req, res) => {
   // set is_sold to true if we hit buyout, keep is sold if it had it originally
   let is_sold = false;
   const oldAuction = await Auction.findById(id);
-  console.log("body value: ", req.body.current_bid);
-  console.log("buyout: ", oldAuction.buyout_price);
-
   if (parseInt(req.body.current_bid) === oldAuction.buyout_price) {
-    console.log("SÅÅÅÅÅÅLD");
-    console.log("body value: ", req.body.bid);
-    console.log("buyout: ", oldAuction.buyout_price);
-
     is_sold = true;
   } else if (req.body.is_sold === true) {
     is_sold = true; // retain the true value of is_sold from req.body
   }
+
+  // get username of bidder
+  const bidder = await User.findById(req.user._id);
 
   // first param to find auction in form, second is updated version of that auction
   const auction = await Auction.findByIdAndUpdate(
@@ -153,6 +150,7 @@ const updateAuction = async (req, res) => {
     {
       ...req.body,
       is_sold: is_sold,
+      bidder_username: bidder.username,
     }
   );
 

@@ -21,7 +21,10 @@ const CreateAuctionForm = () => {
       return;
     }
 
-    let min_bid = minBid;
+    // default value 1 if empty
+    let min_bid;
+    minBid === "" ? (min_bid = 1) : (min_bid = minBid);
+
     let buyout_price = buyoutPrice;
     let ending_date = endingDate;
 

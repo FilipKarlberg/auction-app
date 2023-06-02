@@ -14,15 +14,19 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+    required: true,
+  },
 });
 
 // all signup logic here:
 
 // static signup method
 // 'this' does not work in arrow function, have to use standard async function
-userSchema.statics.signup = async function (email, password) {
+userSchema.statics.signup = async function (email, password, username) {
   // validation
-  if (!email || !password) {
+  if (!email || !password || !username) {
     throw Error("Please fill all fields");
   }
   if (!validator.isEmail(email)) {
@@ -32,16 +36,22 @@ userSchema.statics.signup = async function (email, password) {
     throw Error("Password must be at least 8 characters long");
   }
 
-  const exists = await this.findOne({ email });
+  const existsEmail = await this.findOne({ email });
 
-  if (exists) {
+  if (existsEmail) {
     throw Error("Email already exists");
+  }
+
+  const existsUsername = await this.findOne({ username });
+
+  if (existsUsername) {
+    throw Error("Username already exists");
   }
 
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
-  const user = await this.create({ email, password: hash });
+  const user = await this.create({ email, password: hash, username });
 
   return user;
 };

@@ -92,15 +92,21 @@ const AuctionPage = () => {
             {auction.current_bid} €
           </p>
         ) : (
-          <p>
-            <strong>Current bid: </strong>
-            {auction.current_bid} €
-          </p>
+          <>
+            <p>
+              <strong>Current bid: </strong>
+              {auction.current_bid} €
+            </p>
+            <p>
+              <strong>Bidder: </strong>
+              {auction.bidder_username ? auction.bidder_username : "-"}
+            </p>
+          </>
         )}
 
         <p>
           <strong>Buyout: </strong>
-          {auction.buyout_price} €
+          {auction.buyout_price ? auction.buyout_price + " €" : "-"}
         </p>
         <p>
           <strong>Last active: </strong>

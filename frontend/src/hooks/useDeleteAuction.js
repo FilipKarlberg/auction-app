@@ -22,7 +22,7 @@ const useDeleteAuction = (auction) => {
       });
 
       if (response.ok) {
-        toast.info("Auction deleted! 👋", {
+        toast.success("Auction deleted! 👋", {
           position: "top-center",
           autoClose: 10000,
           hideProgressBar: true,

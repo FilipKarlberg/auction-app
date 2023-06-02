@@ -39,8 +39,8 @@ const AuctionCard = ({ auction }) => {
       )}
 
       <p>
-        <strong>Buyout: </strong>
-        {auction.buyout_price} €
+        <strong>Bidder: </strong>
+        {auction.bidder_username ? auction.bidder_username : "-"}
       </p>
       <p>
         <strong>Last active: </strong>

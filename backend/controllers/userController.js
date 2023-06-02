@@ -16,7 +16,9 @@ const loginUser = async (req, res) => {
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ _id: user._id, email, token });
+    res
+      .status(200)
+      .json({ username: user.username, _id: user._id, email, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -24,16 +26,18 @@ const loginUser = async (req, res) => {
 
 // signup user
 const signupUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
 
   try {
     // using the static function inside userModel
-    const user = await User.signup(email, password);
+    const user = await User.signup(email, password, username);
 
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ _id: user._id, email, token });
+    res
+      .status(200)
+      .json({ username: user.username, _id: user._id, email, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
