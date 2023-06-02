@@ -16,11 +16,17 @@ body {
 header {
   background: var(--primaryBackground);
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  width: 100vw;
+  overflow-x: hidden;
 }
-header .container {
+.container {
   height: 56px;
   max-width: 1400px;
-  padding: 0px 20px;
+  width: 100%;
+  padding: 0px 25px;
   display: flex;
   align-items: center;
   justify-content: space-between;

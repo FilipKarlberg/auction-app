@@ -1,8 +1,10 @@
 import { useAuthContext } from "../hooks/useAuthContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const useDeleteAuction = (auction) => {
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   const deleteAuction = async () => {
     if (!user) {
@@ -33,6 +35,7 @@ const useDeleteAuction = (auction) => {
           theme: "colored",
         });
         console.log("Removed Auction: ", auction._id);
+        navigate("/");
       } else {
         toast.error("Failed to delete auction.", {
           position: "top-center",
