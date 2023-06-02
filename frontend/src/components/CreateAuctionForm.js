@@ -118,6 +118,7 @@ const CreateAuctionForm = () => {
         type="number"
         onChange={(e) => setMinBid(e.target.value)}
         value={minBid}
+        placeholder="€"
         name="min_bid"
       ></input>
 
@@ -126,6 +127,7 @@ const CreateAuctionForm = () => {
         type="number"
         onChange={(e) => setBuyoutPrice(e.target.value)}
         value={buyoutPrice}
+        placeholder="€"
         name="buyout_price"
       ></input>
 
@@ -135,7 +137,7 @@ const CreateAuctionForm = () => {
         onChange={(e) => setEndingDate(e.target.value)}
         value={endingDate}
         name="ending_date"
-        className={emptyFields?.includes("ending_date") ? "error" : ""}
+        className={emptyFields?.includes("ending date") ? "error" : ""}
         min={getMinDate()}
         max={getMaxDate()}
       ></input>

@@ -77,7 +77,7 @@ const AuctionPage = () => {
           }}
         />
         <p>
-          <strong>Body: </strong>
+          <strong>Info: </strong>
           {auction.body}
         </p>
 
