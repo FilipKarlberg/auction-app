@@ -253,6 +253,31 @@ form.createAuction {
   top: -17px;
 }
 
+/* auction page */
 .bid-form {
   margin-top: 20px;
+}
+.auction-page-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 10px;
+  max-height: 550px;
+}
+.message-feed {
+  overflow: scroll;
+  overflow-x: hidden;
+  max-height: 400px;
+}
+.message-card {
+  width: 250px;
+  background: var(--primaryBackground);
+  border-radius: 5px;
+  position: relative;
+  padding: 15px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+.message-card p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
 }

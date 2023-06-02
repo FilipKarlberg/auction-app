@@ -112,7 +112,7 @@ const getMessagesByAuctionId = async (req, res) => {
   }
 
   const messages = await Message.find({ auction_id: id }).sort({
-    createdAt: 1,
+    createdAt: -1,
   });
 
   if (!messages) {

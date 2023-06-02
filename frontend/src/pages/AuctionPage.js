@@ -58,81 +58,83 @@ const AuctionPage = () => {
 
   return (
     <>
-      <div className="auction-card">
-        {isCreator && (
-          <span
-            className="material-symbols-outlined"
-            onClick={() => {
-              deleteAuction();
+      <div className="auction-page-container">
+        <div className="auction-card">
+          {isCreator && (
+            <span
+              className="material-symbols-outlined"
+              onClick={() => {
+                deleteAuction();
+              }}
+            >
+              delete
+            </span>
+          )}
+          <h4>{auction.title}</h4>
+          <img
+            src={`/api/images/${auction.image}`}
+            alt={"placeholder"}
+            onError={(e) => {
+              e.target.onerror = null; // Prevent infinite fallback loop
+              e.target.src = placeholderImage;
             }}
-          >
-            delete
-          </span>
-        )}
-        <h4>{auction.title}</h4>
-        <img
-          src={`/api/images/${auction.image}`}
-          alt={"placeholder"}
-          onError={(e) => {
-            e.target.onerror = null; // Prevent infinite fallback loop
-            e.target.src = placeholderImage;
-          }}
-        />
-        <p>
-          <strong>Info: </strong>
-          {auction.body}
-        </p>
-
-        {!auction.current_bid ? (
+          />
           <p>
-            <strong>Start bid: </strong>
-            {auction.min_bid} €
+            <strong>Info: </strong>
+            {auction.body}
           </p>
-        ) : auction.is_sold ? (
-          <>
-            <p>
-              <strong>Sold for: </strong>
-              {auction.current_bid} €
-            </p>
-            <p>
-              <strong>Buyer: </strong>
-              {auction.bidder_username}
-            </p>
-          </>
-        ) : (
-          <>
-            <p>
-              <strong>Current bid: </strong>
-              {auction.current_bid} €
-            </p>
-            <p>
-              <strong>Bidder: </strong>
-              {auction.bidder_username ? auction.bidder_username : "-"}
-            </p>
-          </>
-        )}
 
-        {!auction.is_sold && (
+          {!auction.current_bid ? (
+            <p>
+              <strong>Start bid: </strong>
+              {auction.min_bid} €
+            </p>
+          ) : auction.is_sold ? (
+            <>
+              <p>
+                <strong>Sold for: </strong>
+                {auction.current_bid} €
+              </p>
+              <p>
+                <strong>Buyer: </strong>
+                {auction.bidder_username}
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                <strong>Current bid: </strong>
+                {auction.current_bid} €
+              </p>
+              <p>
+                <strong>Bidder: </strong>
+                {auction.bidder_username ? auction.bidder_username : "-"}
+              </p>
+            </>
+          )}
+
+          {!auction.is_sold && (
+            <p>
+              <strong>Buyout: </strong>
+              {auction.buyout_price ? auction.buyout_price + " €" : "-"}
+            </p>
+          )}
+
           <p>
-            <strong>Buyout: </strong>
-            {auction.buyout_price ? auction.buyout_price + " €" : "-"}
+            <strong>Last active: </strong>
+            {formatDistanceToNow(new Date(auction.updatedAt), {
+              addSuffix: true,
+            })}
           </p>
-        )}
+          <p>
+            <strong>Ends: </strong>
+            {auction.ending_date}
+          </p>
 
-        <p>
-          <strong>Last active: </strong>
-          {formatDistanceToNow(new Date(auction.updatedAt), {
-            addSuffix: true,
-          })}
-        </p>
-        <p>
-          <strong>Ends: </strong>
-          {auction.ending_date}
-        </p>
-
-        {!auction.is_sold && <BidForm auction={auction} />}
+          {!auction.is_sold && <BidForm auction={auction} />}
+        </div>
+        <MessageFeed auction={auction} />
       </div>
-      <MessageFeed auction={auction} />
       <MessageForm auction={auction} />
     </>
   );

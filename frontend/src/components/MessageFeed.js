@@ -24,7 +24,7 @@ const MessageFeed = ({ auction }) => {
 
   return (
     <>
-      <div className="auction-feed">
+      <div className="message-feed">
         <div className="auctions">
           {data?.data.map((message) => (
             <MessageCard key={message._id} message={message} />
