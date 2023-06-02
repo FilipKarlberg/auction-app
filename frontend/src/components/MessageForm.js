@@ -63,7 +63,7 @@ const MessageForm = ({ auction }) => {
   };
 
   return (
-    <form className="create" onSubmit={handleSubmit}>
+    <form className="message-form" onSubmit={handleSubmit}>
       <label>Send message</label>
       <input
         type="text"

@@ -20,6 +20,9 @@ header {
   justify-content: center;
   overflow: auto;
   overflow-x: hidden;
+  position: sticky;
+  top: 0px;
+  z-index: 100;
 }
 .container {
   height: 56px;
@@ -257,16 +260,17 @@ form.createAuction {
 .bid-form {
   margin-top: 20px;
 }
+.message-form {
+  margin-top: 20px;
+  padding-right: 0px;
+}
 .auction-page-container {
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 10px;
-  max-height: 550px;
 }
 .message-feed {
-  overflow: scroll;
-  overflow-x: hidden;
-  max-height: 400px;
+  height: 100%;
 }
 .message-card {
   width: 250px;
@@ -280,4 +284,9 @@ form.createAuction {
   margin: 0;
   font-size: 0.9em;
   color: #555;
+}
+.auction-card-aside {
+  position: sticky;
+  top: 76px;
+  height: fit-content;
 }
