@@ -16,10 +16,6 @@ const AuctionCard = ({ auction }) => {
           e.target.src = placeholderImage;
         }}
       />
-      <p>
-        <strong>Body: </strong>
-        {auction.body}
-      </p>
 
       {!auction.current_bid ? (
         <p>
@@ -42,10 +38,12 @@ const AuctionCard = ({ auction }) => {
         <strong>Bidder: </strong>
         {auction.bidder_username ? auction.bidder_username : "-"}
       </p>
+
       <p>
         <strong>Last active: </strong>
         {formatDistanceToNow(new Date(auction.updatedAt), { addSuffix: true })}
       </p>
+
       <p>
         <strong>Ends: </strong>
         {auction.ending_date}

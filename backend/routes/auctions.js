@@ -21,8 +21,8 @@ router.get("/", getAuctions);
 // GET a single Auction
 router.get("/:id", getAuction);
 
-// GET a single Auction with user_id
-router.get("/:id", getAuctionsByUserId);
+// GET auctions with user_id
+router.get("/user/:userId", requireAuth, getAuctionsByUserId);
 
 // POST a new Auction
 router.post(

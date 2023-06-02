@@ -64,7 +64,7 @@ const BidForm = ({ auction }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className="bid-form" onSubmit={handleSubmit}>
         <label>Place bid</label>
         <input
           type="number"

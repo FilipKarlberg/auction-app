@@ -12,6 +12,7 @@ import AuctionPage from "./pages/AuctionPage";
 // toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MyAuctions from "./pages/MyAuctions";
 
 function App() {
   const { user } = useAuthContext();
@@ -40,6 +41,11 @@ function App() {
                 element={!user ? <Signup /> : <Navigate to="/" />}
               />
               <Route path="/auctions/:auctionId" element={<AuctionPage />} />
+
+              <Route
+                path="/profile"
+                element={user ? <MyAuctions /> : <Navigate to="/login" />}
+              />
             </Routes>
           </div>
         </BrowserRouter>

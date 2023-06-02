@@ -107,11 +107,14 @@ const AuctionPage = () => {
               <strong>Bidder: </strong>
               {auction.bidder_username ? auction.bidder_username : "-"}
             </p>
-            <p>
-              <strong>Buyout: </strong>
-              {auction.buyout_price ? auction.buyout_price + " €" : "-"}
-            </p>
           </>
+        )}
+
+        {!auction.is_sold ?? (
+          <p>
+            <strong>Buyout: </strong>
+            {auction.buyout_price ? auction.buyout_price + " €" : "-"}
+          </p>
         )}
 
         <p>
@@ -124,8 +127,9 @@ const AuctionPage = () => {
           <strong>Ends: </strong>
           {auction.ending_date}
         </p>
+
+        {!auction.is_sold && <BidForm auction={auction} />}
       </div>
-      {!auction.is_sold && <BidForm auction={auction} />}
     </>
   );
 };

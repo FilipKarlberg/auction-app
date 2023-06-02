@@ -22,7 +22,7 @@ const Navbar = () => {
               <Link to="/" className="border-hover">
                 Auctions
               </Link>
-              <Link className="border-hover">My Bids</Link>
+
               <Link to="/create" className="border-hover">
                 Create Auction
               </Link>
@@ -33,7 +33,10 @@ const Navbar = () => {
         <nav className="nav-right">
           {user && (
             <div>
-              <span>{user.username}</span>
+              <Link to="/profile" className="border-hover">
+                <span>{user.username}</span>
+              </Link>
+
               <Link to="/">
                 <button onClick={handleLogoutClick}>Logout</button>
               </Link>

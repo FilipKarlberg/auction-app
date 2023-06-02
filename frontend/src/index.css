@@ -247,3 +247,7 @@ form.createAuction {
   position: relative;
   top: -17px;
 }
+
+.bid-form {
+  margin-top: 20px;
+}
