@@ -83,7 +83,7 @@ const AuctionPage = () => {
 
         {!auction.current_bid ? (
           <p>
-            <strong>Minimum bid: </strong>
+            <strong>Start bid: </strong>
             {auction.min_bid} €
           </p>
         ) : auction.is_sold ? (
@@ -110,7 +110,7 @@ const AuctionPage = () => {
           </>
         )}
 
-        {!auction.is_sold ?? (
+        {!auction.is_sold && (
           <p>
             <strong>Buyout: </strong>
             {auction.buyout_price ? auction.buyout_price + " €" : "-"}

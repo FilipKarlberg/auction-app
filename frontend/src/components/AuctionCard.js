@@ -19,35 +19,47 @@ const AuctionCard = ({ auction }) => {
 
       {!auction.current_bid ? (
         <p>
-          <strong>Minimum bid: </strong>
+          <strong>Start bid: </strong>
           {auction.min_bid} €
         </p>
       ) : auction.is_sold ? (
-        <p>
-          <strong>Sold for: </strong>
-          {auction.current_bid} €
-        </p>
+        <>
+          <p>
+            <strong>Sold for: </strong>
+            {auction.current_bid} €
+          </p>
+          <p>
+            <strong>Buyer: </strong>
+            {auction.bidder_username}
+          </p>
+        </>
       ) : (
+        <>
+          <p>
+            <strong>Current bid: </strong>
+            {auction.current_bid} €
+          </p>
+        </>
+      )}
+
+      {!auction.is_sold && (
         <p>
-          <strong>Current bid: </strong>
-          {auction.current_bid} €
+          <strong>Buyout: </strong>
+          {auction.buyout_price ? auction.buyout_price + " €" : "-"}
         </p>
       )}
 
       <p>
-        <strong>Bidder: </strong>
-        {auction.bidder_username ? auction.bidder_username : "-"}
-      </p>
-
-      <p>
         <strong>Last active: </strong>
-        {formatDistanceToNow(new Date(auction.updatedAt), { addSuffix: true })}
+        {formatDistanceToNow(new Date(auction.updatedAt), {
+          addSuffix: true,
+        })}
       </p>
-
       <p>
         <strong>Ends: </strong>
         {auction.ending_date}
       </p>
+
       <Link to={`/auctions/${auction._id}`}>
         <button className="border-hover">View Auction</button>
       </Link>
