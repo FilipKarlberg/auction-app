@@ -42,7 +42,7 @@ function App() {
               />
               <Route
                 path="/auctions/:auctionId"
-                element={user ? <AuctionPage /> : <Navigate to="/" />}
+                element={user ? <AuctionPage /> : <Navigate to="/login" />}
               />
               <Route
                 path="/profile"
