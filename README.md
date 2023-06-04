@@ -19,6 +19,8 @@ Server-side JavaScript runtime environment
 ### Additional Technologies
 - [Postman](https://www.postman.com/)
 Help w/ building and sending requests to api
+- [Mongoose](https://mongoosejs.com/)
+Data validation, query building and middelware support
 - [React Query](https://tanstack.com/query/v3/docs/react/overview)
 Handle cache, garbage collection and mutating data
 - [JSON Web Tokens](https://jwt.io/)
@@ -34,8 +36,9 @@ Toast notification
 - [Date fns](https://date-fns.org/)
 Formatting dates
 
+
 ## Presentations
 - [Project showcase screencast](https://youtu.be/SztmeeR4s7o)
 Non-technical
-- [Technical screencast](https://youtu.be/SztmeeR4s7o)
+- [Technical screencast](https://youtu.be/GGO4OwcOMAI)
 Technical
