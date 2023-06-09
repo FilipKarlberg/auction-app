@@ -1,6 +1,6 @@
 # auction-app
 This repository is created with the purpose of further developing an auction app I created during my time at Linköping University.
-Originally, the web app was written in JavaScript and now the intention is to rewrite the application in TypeScript.
+Originally, the web app was written in JavaScript and the intention is to rewrite the application in TypeScript.
 
 
 ## Technical Specification 🛠️
