@@ -1,0 +1,292 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap");
+
+:root {
+  --primary: #000000;
+  --primaryBackground: #ffffff;
+  --secondaryBackground: #f5f5f5;
+  --error: #ca0d49;
+  --errorSecondary: #ffefef;
+}
+
+body {
+  background: var(--primaryBackground);
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+header {
+  background: var(--primaryBackground);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  overflow-x: hidden;
+  position: sticky;
+  top: 0px;
+  z-index: 100;
+}
+.container {
+  height: 56px;
+  max-width: 1400px;
+  width: 100%;
+  padding: 0px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header a {
+  color: #333;
+  text-decoration: none;
+}
+.pages {
+  max-width: 1400px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+/* homepage */
+.home {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 100px;
+}
+.message-details {
+  background: var(--primaryBackground);
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.message-details h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+.message-details p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+.message-details span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+  transition: 150ms;
+}
+.message-details span:hover {
+  color: white;
+  background: rgb(255, 98, 98);
+}
+
+/* message form */
+label,
+input {
+  display: block;
+}
+textarea,
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+form button {
+  background: var(--primary);
+  border: 0;
+  color: var(--primaryBackground);
+  border: 1px solid var(--primary);
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 150ms;
+}
+form button:hover {
+  color: var(--primary);
+  background: var(--primaryBackground);
+}
+div.error {
+  padding: 10px;
+  background: var(--errorSecondary);
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+textarea.error,
+input.error {
+  border: 1px solid var(--error);
+}
+
+/* navbar */
+.border-hover {
+  transition: 150ms;
+  border: 2px solid rgba(0, 0, 0, 0);
+}
+.border-hover:hover {
+  border: 2px solid var(--primary);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+nav {
+  display: flex;
+  align-items: center;
+}
+nav .logotype {
+  margin-right: 40px;
+}
+nav.nav-left h1 {
+  margin: 0;
+}
+nav.nav-right a,
+nav.nav-left a {
+  background: var(--primaryBackground);
+  color: var(--primary);
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: 150ms;
+}
+nav.nav-right a + a,
+nav.nav-left a + a {
+  margin-left: 5px;
+}
+
+nav button {
+  background: var(--primaryBackground);
+  color: var(--primary);
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  border: 2px solid rgba(0, 0, 0, 0);
+  transition: 150ms;
+  margin-left: 10px;
+}
+nav button:hover {
+  border: 2px solid var(--primary);
+}
+
+/* auth forms */
+form.signup,
+form.login {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--primaryBackground);
+  border-radius: 4px;
+}
+
+/* create auction form */
+form.createAuction {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--primaryBackground);
+  border-radius: 4px;
+}
+
+/* auctions */
+.auctions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.auction-card {
+  width: 300px;
+  background: var(--primaryBackground);
+  border-radius: 5px;
+  position: relative;
+  padding: 20px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+.auction-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.auction-card h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+.auction-card p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+.auction-card span {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+  transition: 150ms;
+}
+.auction-card span:hover {
+  color: white;
+  background: rgb(255, 98, 98);
+}
+.auction-card button {
+  font-size: 15px;
+  font-weight: bold;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color: var(--secondaryBackground);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* password strength meter */
+.password-strength-meter {
+  position: relative;
+  top: -17px;
+}
+
+/* auction page */
+.bid-form {
+  margin-top: 20px;
+}
+.message-form {
+  margin-top: 20px;
+  padding-right: 0px;
+}
+.auction-page-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 10px;
+}
+.message-feed {
+  height: 100%;
+}
+.message-card {
+  width: 250px;
+  background: var(--primaryBackground);
+  border-radius: 5px;
+  position: relative;
+  padding: 15px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+.message-card p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+.auction-card-aside {
+  position: sticky;
+  top: 76px;
+  height: fit-content;
+}
