@@ -16,12 +16,15 @@ type Action = {
   payload?: User;
 };
 
-enum ActionType {
+export enum ActionType {
   LOGIN,
   LOGOUT,
 }
 
-export const AuthContext = createContext<User | null>(null);
+export const AuthContext = createContext<{
+  state: State;
+  dispatch: React.Dispatch<Action>;
+} | null>(null);
 
 const authReducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -60,6 +63,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   //console.log("AuthContext state: ", state);
   return (
-    <AuthContext.Provider value={state.user}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ state, dispatch }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

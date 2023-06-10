@@ -1,4 +1,4 @@
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext, ActionType } from "../context/AuthContext";
 import { useContext } from "react";
 
 // every time we want to use the messages data, use the useMessagesContext hook to get
@@ -12,5 +12,5 @@ export const useAuthContext = () => {
     throw Error("useAuthContext must be used inside an AuthContextProvider");
   }
 
-  return context;
+  return { ...context, ActionType };
 };
