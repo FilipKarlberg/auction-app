@@ -9,3 +9,11 @@ export type RegisterUser = {
   username: string;
   email: string;
 };
+
+export type ErrorType = {
+  response?: {
+    data?: {
+      error?: string;
+    };
+  };
+};

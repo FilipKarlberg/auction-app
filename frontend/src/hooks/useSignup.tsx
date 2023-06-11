@@ -9,16 +9,21 @@ import { RegisterUser } from "../types/types";
 export const useSignUpUser = (newUser: RegisterUser) => {
   const { dispatch: authDispatch, ActionType } = useAuthContext();
 
-  const { isLoading, mutate: signUpUser } = useMutation<
-    AxiosResponse,
-    AxiosError,
-    RegisterUser
-  >(
+  const {
+    data,
+    isError,
+    error,
+    isSuccess,
+    isLoading,
+    mutate: signUpUser,
+  } = useMutation<AxiosResponse, AxiosError, RegisterUser>(
     async () => {
       return await apiService.createUser(newUser);
     },
     {
       onSuccess: (res: AxiosResponse) => {
+        console.log(res);
+        localStorage.setItem("user", JSON.stringify(res));
         const responseData = res.data;
         authDispatch({ type: ActionType.LOGIN, payload: responseData });
       },
@@ -28,5 +33,12 @@ export const useSignUpUser = (newUser: RegisterUser) => {
     }
   );
 
-  return { isLoading, signUpUser };
+  return {
+    data,
+    isError,
+    error,
+    isSuccess,
+    isLoading,
+    signUpUser,
+  };
 };

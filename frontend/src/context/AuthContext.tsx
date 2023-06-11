@@ -53,10 +53,12 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
     if (user !== null) {
       dispatch({ type: ActionType.LOGIN, payload: user });
+      console.log("User is logged in:", user); // Modify the console.log statement
+    } else {
+      console.log("User is not logged in"); // Modify the console.log statement
     }
   }, []);
 
-  //console.log("AuthContext state: ", state);
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       {children}
