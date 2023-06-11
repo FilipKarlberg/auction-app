@@ -51,9 +51,8 @@ const Signup = () => {
         value={password}
       />
 
-      {errorMessage && <div className="error">{errorMessage}</div>}
-
       <button disabled={isLoading}>Sign up</button>
+      {errorMessage && <div className="error">{errorMessage}</div>}
     </form>
   );
 };

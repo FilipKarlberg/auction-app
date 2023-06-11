@@ -1,37 +1,44 @@
 import { useAuthContext } from "./useAuthContext";
 import { useState } from "react";
+import { UserLogin, User } from "../types/types";
+import apiService from "../services/apiService";
+import { useMutation } from "react-query";
+import { AxiosResponse, AxiosError } from "axios";
 
-export const useLogin = () => {
-  const [error, setError] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+export const useLoginUser = (userLogin: UserLogin) => {
   const { dispatch: authDispatch, ActionType } = useAuthContext();
 
-  const login = async (email: string, password: string) => {
-    setIsLoading(true);
-    setError("");
+  const {
+    data,
+    isError,
+    error,
+    isSuccess,
+    isLoading,
+    mutate: logInUser,
+  } = useMutation<AxiosResponse, AxiosError, UserLogin>(
+    async () => {
+      return await apiService.loginUser(userLogin);
+    },
+    {
+      onSuccess: (res: AxiosResponse) => {
+        console.log(res);
+        localStorage.setItem("user", JSON.stringify(res));
 
-    const response = await fetch("/api/user/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const json = await response.json();
-
-    if (!response.ok) {
-      setIsLoading(false);
-      setError(json.error);
+        const responseData: User = res.data;
+        authDispatch({ type: ActionType.LOGIN, payload: responseData });
+      },
+      onError: (err: AxiosError) => {
+        console.log(err.response?.data || err);
+      },
     }
-    if (response.ok) {
-      // save user to local storage
-      localStorage.setItem("user", JSON.stringify(json));
+  );
 
-      // update auth context
-      authDispatch({ type: ActionType.LOGIN, payload: json });
-
-      setIsLoading(false);
-    }
+  return {
+    data,
+    isError,
+    error,
+    isSuccess,
+    isLoading,
+    logInUser,
   };
-
-  return { login, isLoading, error };
 };

@@ -1,19 +1,34 @@
 import React, { useState } from "react";
-import { useLogin } from "../hooks/useLogin";
+import { useLoginUser } from "../hooks/useLogin";
+import { UserLogin } from "../types/types";
+import { ErrorType } from "../types/types";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, error, isLoading } = useLogin();
+  const { isError, error, isLoading, logInUser } = useLoginUser({
+    email,
+    password,
+  });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await login(email, password);
+    const loginUser: UserLogin = {
+      email,
+      password,
+    };
+
+    logInUser(loginUser);
   };
 
+  // set errorMessage if isError on signup
+  const errorMessage = isError
+    ? (error as ErrorType)?.response?.data?.error || "An error occurred."
+    : null;
+
   return (
-    <form className="login" onSubmit={handleSubmit}>
+    <form className="login" onSubmit={handleLogin}>
       <h3>Log in</h3>
       <label>Email:</label>
       <input
@@ -28,8 +43,8 @@ const Login = () => {
         value={password}
       />
 
-      <button disabled={isLoading}>Log in</button>
-      {error && <div className="error">{error}</div>}
+      <button disabled={isLoading}>Login</button>
+      {errorMessage && <div className="error">{errorMessage}</div>}
     </form>
   );
 };

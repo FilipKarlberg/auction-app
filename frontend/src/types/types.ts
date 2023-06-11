@@ -10,6 +10,11 @@ export type RegisterUser = {
   email: string;
 };
 
+export type UserLogin = {
+  email: string;
+  password: string;
+};
+
 export type ErrorType = {
   response?: {
     data?: {

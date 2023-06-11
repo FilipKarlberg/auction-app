@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RegisterUser } from "../types/types";
+import { RegisterUser, UserLogin } from "../types/types";
 
 const apiClient = axios.create({
   baseURL: "http://localhost:4000/api",
@@ -13,8 +13,14 @@ const createUser = async (payload: RegisterUser) => {
   return response.data;
 };
 
+const loginUser = async (payload: UserLogin) => {
+  const response = await apiClient.post("/user/login", payload);
+  return response.data;
+};
+
 const apiService = {
   createUser,
+  loginUser,
 };
 
 export default apiService;
