@@ -10,9 +10,13 @@ const messageRoutes = require("./routes/messages");
 const userRoutes = require("./routes/user");
 const auctionRoutes = require("./routes/auctions");
 const imagesRoutes = require("./routes/images");
+const cors = require("cors");
 
 // express app
 const app = express();
+
+// enable CORS
+app.use(cors());
 
 // middleware
 app.use(express.json());
