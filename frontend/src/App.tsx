@@ -4,7 +4,7 @@ import React from "react";
 
 // pages & components
 import Navbar from "./components/Navbar";
-//import Home from "./pages/Home";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 //import CreateAuction from "./pages/CreateAuction";
@@ -16,7 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 //import MyAuctions from "./pages/MyAuctions";
 
 function App() {
-  const user = useAuthContext();
+  const { state } = useAuthContext();
+  const user = state.user;
 
   return (
     <>
@@ -33,11 +34,12 @@ function App() {
                 path="/signup"
                 element={!user ? <Signup /> : <Navigate to="/" />}
               />
-              {/*
+
               <Route
                 path="/"
                 element={user ? <Home /> : <Navigate to="/login" />}
               />
+              {/*
               <Route
                 path="/create"
                 element={user ? <CreateAuction /> : <Navigate to="/login" />}
