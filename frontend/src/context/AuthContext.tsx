@@ -1,10 +1,5 @@
 import React, { createContext, useReducer, useEffect, ReactNode } from "react";
-
-type User = {
-  token: string;
-  username: string;
-  email: string;
-};
+import { User } from "../types/types";
 
 // user can eiter exist or not
 type State = {

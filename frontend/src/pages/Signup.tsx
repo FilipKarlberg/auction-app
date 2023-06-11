@@ -1,23 +1,34 @@
 import React, { useState } from "react";
-import { useSignup } from "../hooks/useSignup";
+import { useSignUpUser } from "../hooks/useSignup";
+import { RegisterUser } from "../types/types";
 
 // Components
 //import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 
 const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const { signup, error, isLoading } = useSignup();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const { isLoading, signUpUser } = useSignUpUser({
+    email: email,
+    password: password,
+    username: username,
+  });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await signup(email, password, username);
+    const newUser: RegisterUser = {
+      email: email,
+      password: password,
+      username: username,
+    };
+
+    signUpUser(newUser);
   };
 
   return (
-    <form className="signup" onSubmit={handleSubmit}>
+    <form className="signup" onSubmit={handleSignUp}>
       <h3>Sign up</h3>
       <label>Username:</label>
       <input
@@ -43,10 +54,10 @@ const Signup = () => {
         className={"password-strength-meter"}
         password={password}
       />
+      {error && <div className="error">{error}</div>}
       */}
 
       <button disabled={isLoading}>Sing up</button>
-      {error && <div className="error">{error}</div>}
     </form>
   );
 };
