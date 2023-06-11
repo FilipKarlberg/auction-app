@@ -8,8 +8,8 @@ const apiClient = axios.create({
   },
 });
 
-const createUser = async (user: RegisterUser) => {
-  const response = await apiClient.post("/user/signup", { body: user });
+const createUser = async (payload: RegisterUser) => {
+  const response = await apiClient.post("/user/signup", payload);
   return response.data;
 };
 
