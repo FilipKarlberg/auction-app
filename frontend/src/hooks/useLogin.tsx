@@ -1,10 +1,10 @@
 import { useAuthContext } from "./useAuthContext";
-import { UserLogin, User } from "../types/types";
+import { UserLogin, User, LoginResponse } from "../types/types";
 import apiService from "../services/apiService";
 import { useMutation } from "react-query";
-import { AxiosResponse, AxiosError } from "axios";
+import { AxiosError } from "axios";
 
-export const useLoginUser = (userLogin: UserLogin) => {
+export const useLogin = (userLogin: UserLogin) => {
   const { dispatch: authDispatch, ActionType } = useAuthContext();
 
   const {
@@ -14,16 +14,20 @@ export const useLoginUser = (userLogin: UserLogin) => {
     isSuccess,
     isLoading,
     mutate: logInUser,
-  } = useMutation<AxiosResponse, AxiosError, UserLogin>(
+  } = useMutation<LoginResponse, AxiosError, UserLogin>(
     async () => {
       return await apiService.loginUser(userLogin);
     },
     {
-      onSuccess: (res: AxiosResponse) => {
-        console.log(res);
-        localStorage.setItem("user", JSON.stringify(res));
+      onSuccess: (res: LoginResponse) => {
+        console.log("res: ", res);
 
-        const responseData: User = res.data;
+        const responseData: User = {
+          token: res.token,
+          username: res.username,
+          email: res.email,
+        };
+
         authDispatch({ type: ActionType.LOGIN, payload: responseData });
       },
       onError: (err: AxiosError) => {

@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useEffect, ReactNode } from "react";
 import { User } from "../types/types";
 
-// user can eiter exist or not
+// null if user is not logged in
 type State = {
   user: User | null;
 };
@@ -24,11 +24,15 @@ export const AuthContext = createContext<{
 const authReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ActionType.LOGIN:
+      //console.log("Logging in with payload:", action.payload);
       if (action.payload) {
+        //console.log("Updated state:", { user: action.payload });
+        localStorage.setItem("user", JSON.stringify(action.payload));
         return { user: action.payload };
       }
       break;
     case ActionType.LOGOUT:
+      localStorage.removeItem("user");
       return { user: null };
     default:
       break;
@@ -45,17 +49,13 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     user: null,
   });
 
-  // if there exists a user in localstorage, show as logged in
+  // if there exists a user in localstorage, log in
   useEffect(() => {
     const userStorage = localStorage.getItem("user");
+    const user: User = userStorage ? JSON.parse(userStorage) : null;
 
-    const user: User | null = userStorage ? JSON.parse(userStorage) : null;
-
-    if (user !== null) {
+    if (user) {
       dispatch({ type: ActionType.LOGIN, payload: user });
-      console.log("User is logged in:", user);
-    } else {
-      console.log("User is not logged in");
     }
   }, []);
 

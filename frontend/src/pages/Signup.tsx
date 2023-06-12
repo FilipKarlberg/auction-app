@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useSignUpUser } from "../hooks/useSignup";
+import { useSignUp } from "../hooks/useSignup";
 import { RegisterUser, ErrorResponse } from "../types/types";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const { isError, error, isLoading, signUpUser } = useSignUpUser({
+  const { isError, error, isLoading, signUpUser } = useSignUp({
     email,
     password,
     username,

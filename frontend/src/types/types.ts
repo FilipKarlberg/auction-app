@@ -22,3 +22,10 @@ export type ErrorResponse = {
     };
   };
 };
+
+export type LoginResponse = {
+  token: string;
+  username: string;
+  email: string;
+  [key: string]: unknown; // Index signature for arbitrary properties
+};
