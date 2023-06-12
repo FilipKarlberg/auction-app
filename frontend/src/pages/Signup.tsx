@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSignUpUser } from "../hooks/useSignup";
-import { RegisterUser, ErrorType } from "../types/types";
+import { RegisterUser, ErrorResponse } from "../types/types";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +11,7 @@ const Signup = () => {
     password,
     username,
   });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,12 +23,16 @@ const Signup = () => {
     };
 
     signUpUser(newUser);
+    setErrorMessage(null);
   };
 
-  // set errorMessage if isError on signup
-  const errorMessage = isError
-    ? (error as ErrorType)?.response?.data?.error || "An error occurred."
-    : null;
+  useEffect(() => {
+    if (isError) {
+      const newErrorMessage =
+        (error as ErrorResponse).response.data.error || "An error occurred.";
+      setErrorMessage(newErrorMessage);
+    }
+  }, [isError, error]);
 
   return (
     <form className="signup" onSubmit={handleSignUp}>
@@ -52,6 +57,7 @@ const Signup = () => {
       />
 
       <button disabled={isLoading}>Sign up</button>
+
       {errorMessage && <div className="error">{errorMessage}</div>}
     </form>
   );

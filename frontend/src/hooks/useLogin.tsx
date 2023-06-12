@@ -1,5 +1,4 @@
 import { useAuthContext } from "./useAuthContext";
-import { useState } from "react";
 import { UserLogin, User } from "../types/types";
 import apiService from "../services/apiService";
 import { useMutation } from "react-query";

@@ -15,10 +15,10 @@ export type UserLogin = {
   password: string;
 };
 
-export type ErrorType = {
-  response?: {
-    data?: {
-      error?: string;
+export type ErrorResponse = {
+  response: {
+    data: {
+      error: string;
     };
   };
 };

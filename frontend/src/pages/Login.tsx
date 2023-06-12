@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoginUser } from "../hooks/useLogin";
 import { UserLogin } from "../types/types";
-import { ErrorType } from "../types/types";
+import { ErrorResponse } from "../types/types";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +10,7 @@ const Login = () => {
     email,
     password,
   });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,10 +23,13 @@ const Login = () => {
     logInUser(loginUser);
   };
 
-  // set errorMessage if isError on signup
-  const errorMessage = isError
-    ? (error as ErrorType)?.response?.data?.error || "An error occurred."
-    : null;
+  useEffect(() => {
+    if (isError) {
+      const newErrorMessage =
+        (error as ErrorResponse).response.data.error || "An error occurred.";
+      setErrorMessage(newErrorMessage);
+    }
+  }, [isError, error]);
 
   return (
     <form className="login" onSubmit={handleLogin}>
